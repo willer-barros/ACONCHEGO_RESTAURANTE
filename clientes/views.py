@@ -1,25 +1,21 @@
-from django.shortcuts import render
-from rest_framework import generics, status
-from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Cliente
-from .serializers import ClienteSerializers, LoginSerializers
+from rest_framework import generics
+from .models import MenuItem, Order
+from .serializers import MenuItemSerializer, OrderSerializer
+from rest_framework.permissions import IsAuthenticated
 
-class RegistroView(generics.CreateAPIView):
-    queryset = Cliente.objects.all()
-    serializers_class = ClienteSerializers
+class MenuItemList(generics.ListCreateAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
 
-class LoginView(generics.GenericAPIView):
-    serializer_class = LoginSerializers
+class OrderList(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        cliente = Cliente.objects.get(email=serializer.validated['email'])
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-        refresh = RefreshToken.for_user(cliente)
-
-        return Response({
-            'refresh': str(refresh),
-            'acces': str(refresh.access_token)
-        })
+class OrderDetail(generics.RetrieveUpdateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
