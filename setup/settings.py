@@ -48,7 +48,7 @@ ROOT_URLCONF = 'setup.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'RESTAURANTE_FRONTEND/pages')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,3 +102,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'RESTAURANTE_FRONTEND/pages' )
+]
