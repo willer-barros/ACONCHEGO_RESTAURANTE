@@ -5,5 +5,5 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('clientes.urls')),
-    path('Login', TemplateView.as_view(template_name='index.html')),
+    path('login', TemplateView.as_view(template_name='index.html')),
 ]
