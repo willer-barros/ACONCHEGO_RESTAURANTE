@@ -1,11 +1,11 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from . import views
+from .views import RegistrarClienteView, LoginView, MenuListView, PedidoCreateView, PedidoListView, ListarClientesView
 
 urlpatterns = [
-    path('menu/', views.MenuItemList.as_view(), name='menu-list'),
-    path('orders/', views.OrderList.as_view(), name='order-list'),
-    path('orders/<int:pk>/', views.OrderDetail.as_view(), name='order-detail'),
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('clientes/registrar/', RegistrarClienteView.as_view(), name='registrar-cliente'),
+    path('clientes/', ListarClientesView.as_view(), name='todos-clientes'),
+    path('clientes/login/', LoginView.as_view(), name='login'),
+    path('menu/', MenuListView.as_view(), name='menu'),
+    path('pedidos/', PedidoCreateView.as_view(), name='criar-pedido'),
+    path('pedidos/lista/', PedidoListView.as_view(), name='lista-pedidos'),
 ]
